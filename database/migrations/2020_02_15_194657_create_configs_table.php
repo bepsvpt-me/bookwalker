@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateConfigsTable extends Migration
@@ -17,6 +18,10 @@ class CreateConfigsTable extends Migration
             $table->string('key')->primary();
             $table->text('value');
         });
+
+        DB::table('configs')->insert([
+            ['key' => 'books.downloaded.id', 'value' => '83546'],
+        ]);
     }
 
     /**
