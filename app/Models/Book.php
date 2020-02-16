@@ -52,14 +52,50 @@ final class Book extends Model
         'properties' => [
             'name' => [
                 'type' => 'text',
+
+                'fields' => [
+                    'japanese' => [
+                        'analyzer' => 'kuromoji',
+                        'type' => 'text',
+                    ],
+
+                    'chinese' => [
+                        'analyzer' => 'smartcn',
+                        'type' => 'text',
+                    ],
+                ],
             ],
 
             'slogan' => [
                 'type' => 'text',
+
+                'fields' => [
+                    'japanese' => [
+                        'analyzer' => 'kuromoji',
+                        'type' => 'text',
+                    ],
+
+                    'chinese' => [
+                        'analyzer' => 'smartcn',
+                        'type' => 'text',
+                    ],
+                ],
             ],
 
             'description' => [
                 'type' => 'text',
+
+                'fields' => [
+                    'japanese' => [
+                        'analyzer' => 'kuromoji',
+                        'type' => 'text',
+                    ],
+
+                    'chinese' => [
+                        'analyzer' => 'smartcn',
+                        'type' => 'text',
+                    ],
+                ],
             ],
 
             'price' => [
