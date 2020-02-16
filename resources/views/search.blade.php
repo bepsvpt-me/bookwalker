@@ -27,18 +27,78 @@
         </div>
 
         <article class="col-md-9">
-          <div class="card-body">
-            <h5 class="card-title">{{ $book->name }}</h5>
+          <section class="card-header d-flex align-items-center">
+            <article class="flex-grow-1">
+              <h5 class="card-title mb-0">{{ $book->name }}</h5>
 
-            @if($book->slogan)
-              <h6 class="card-subtitle mb-2 text-muted">{{ $book->slogan }}</h6>
-            @endif
+              @if($book->slogan)
+                <h6 class="card-subtitle text-muted mt-1">{{ $book->slogan }}</h6>
+              @endif
+            </article>
 
-            <p class="card-text">{{ \Illuminate\Support\Str::limit($book->description, 150) }}</p>
+            <article>
+              <a
+                class="card-link"
+                href="#"
+              >
+                {{ $book->type->name }}
+              </a>
+
+              <span class="mx-1 no-select">/</span>
+
+              <a
+                class="card-link"
+                href="#"
+              >
+                {{ $book->category->name }}
+              </a>
+            </article>
+          </section>
+
+          <section class="card-body">
+            <p class="card-text">
+              @foreach(['authors', 'writers', 'illustrators', 'translators'] as $group)
+                @foreach($book->{$group} as $creator)
+                  <a
+                    class="card-link"
+                    href="#"
+                  >
+                    {{ $creator->name }}
+                  </a>
+
+                  <span class="mx-1 no-select">•</span>
+                @endforeach
+              @endforeach
+
+              <span>{{ $book->published_at->toDateString() }}</span>
+
+
+              <span class="mx-1 no-select">•</span>
+
+              <a
+                class="card-link"
+                href="#"
+              >
+                {{ $book->publisher->name }}
+              </a>
+            </p>
 
             <p class="card-text">
-              <small class="text-muted">發售日：{{ $book->published_at->toDateString() }}</small>
+              {{ \Illuminate\Support\Str::limit($book->description, 220) }}
             </p>
+
+            <article>
+              @foreach($book->tags as $tag)
+                <a
+                  class="badge badge-info"
+                  href="#"
+                >
+                  {{ $tag->name }}
+                </a>
+              @endforeach
+            </article>
+
+            <hr>
 
             <a
               class="card-link"
@@ -48,8 +108,12 @@
               target="_blank"
             >
               <small>前往書籍 BookWalker 官方頁面</small>
+
+              <svg style="width: 0.956rem; height: 0.956rem" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" />
+              </svg>
             </a>
-          </div>
+          </section>
         </article>
       </div>
     </section>
