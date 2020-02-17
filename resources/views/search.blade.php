@@ -7,10 +7,18 @@
 @section('main')
   @include('components.form')
 
+  <div class="mt-4 alert alert-primary" role="alert">
+    <strong>書籍圖片僅作辨識用途，版權皆屬台灣漫讀股份有限公司所有</strong>
+  </div>
+
+  <section class="my-4">
+    {{ $books->appends('keyword', request('keyword'))->links() }}
+  </section>
+
   @foreach($books as $book)
     <section class="card my-4">
       <div class="row no-gutters">
-        <div class="col-md-3">
+        <div class="col-md-6 col-lg-3 card-cover">
           <picture>
             <source srcset="{{ route('safe-browse', ['bid' => $book->bookwalker_id]) }}" type="image/webp">
 
@@ -26,7 +34,7 @@
           </picture>
         </div>
 
-        <article class="col-md-9">
+        <article class="col-md-6 col-lg-9">
           <section class="card-header d-flex align-items-center">
             <article class="flex-grow-1">
               <h5 class="card-title mb-0">{{ $book->name }}</h5>
@@ -119,5 +127,5 @@
     </section>
   @endforeach
 
-  {{ $books->appends(['keyword' => request('keyword')])->links() }}
+  {{ $books->appends('keyword', request('keyword'))->links() }}
 @endsection
