@@ -6,6 +6,12 @@ main {
   min-height: calc(100% - 4rem);
 }
 
+nav {
+  ul.pagination {
+    justify-content: center;
+  }
+}
+
 .home {
   min-height: calc(100vh - 8rem);
   display: flex;
@@ -16,4 +22,15 @@ main {
 
 .no-select {
   user-select: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .card-cover {
+    border-right: 1px solid rgba(0, 0, 0, .125);
+
+    img {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
 }
