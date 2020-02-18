@@ -12,7 +12,7 @@
   </div>
 
   <section class="my-4">
-    {{ $books->appends('keyword', request('keyword'))->links() }}
+    {{ $books->appends(request()->query())->links() }}
   </section>
 
   @foreach($books as $book)
@@ -127,5 +127,5 @@
     </section>
   @endforeach
 
-  {{ $books->appends('keyword', request('keyword'))->links() }}
+  {{ $books->appends(request()->query())->links() }}
 @endsection
