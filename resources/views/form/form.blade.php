@@ -1,5 +1,5 @@
 <form action="{{ route('search') }}" method="GET">
-  <section class="mb-0 form-group">
+  <section class="mb-1 form-group">
     <label class="sr-only" for="keyword">Keyword</label>
 
     <div class="input-group">
