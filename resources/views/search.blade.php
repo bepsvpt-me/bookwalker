@@ -5,7 +5,7 @@
 @endif
 
 @section('main')
-  @include('components.form')
+  @include('form.form')
 
   <div class="mt-4 alert alert-primary" role="alert">
     <strong>書籍圖片僅作辨識用途，版權皆屬台灣漫讀股份有限公司所有</strong>

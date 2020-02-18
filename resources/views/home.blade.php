@@ -2,7 +2,7 @@
 
 @section('main')
   <section class="home">
-    @include('components.form')
+    @include('form.form')
 
     <div class="mt-2">
       <strong>
