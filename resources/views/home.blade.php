@@ -4,12 +4,12 @@
   <section class="home">
     @include('form.form')
 
-    <div class="mt-2">
+    <article>
       <strong>
         <small>
           <em>For a Better BookWalker Search Experience</em>
         </small>
       </strong>
-    </div>
+    </article>
   </section>
 @endsection
