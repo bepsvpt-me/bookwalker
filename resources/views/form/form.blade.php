@@ -29,4 +29,14 @@
       </div>
     </div>
   </section>
+
+  @if (Route::currentRouteName() === 'search')
+    @include('form.advanced.publishers')
+
+    @include('form.advanced.types')
+
+    @include('form.advanced.categories')
+
+    @include('form.advanced.tags')
+  @endif
 </form>
