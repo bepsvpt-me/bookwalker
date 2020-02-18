@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use ScoutElastic\Builders\SearchBuilder;
 
@@ -36,9 +38,30 @@ final class SearchController extends Controller
         }
 
         return view('search', [
-            'all' => Book::search($keyword)->get(),
+            'all' => $this->all($keyword),
             'books' => $builder->paginate(),
         ]);
+    }
+
+    /**
+     * Get keyword first 1,000 search result.
+     *
+     * @param string $keyword
+     *
+     * @return Collection
+     */
+    protected function all(string $keyword): Collection
+    {
+        $key = sprintf('search-%s', md5($keyword));
+
+        $ttl = 2 * 60; // 2 minutes
+
+        return Cache::remember($key, $ttl, function () use ($keyword) {
+            return Book::search($keyword)
+                ->take(1000)
+                ->select(['id', 'type_id', 'category_id', 'publisher_id'])
+                ->get();
+        });
     }
 
     /**
