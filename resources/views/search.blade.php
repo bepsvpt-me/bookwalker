@@ -18,7 +18,7 @@
   @foreach($books as $book)
     <section class="card my-4">
       <div class="row no-gutters">
-        <div class="col-md-6 col-lg-3 card-cover">
+        <div class="col-md-4 col-lg-3 col-xl-2 card-cover">
           <picture>
             <source srcset="{{ route('safe-browse', ['bid' => $book->bookwalker_id]) }}" type="image/webp">
 
@@ -34,7 +34,7 @@
           </picture>
         </div>
 
-        <article class="col-md-6 col-lg-9">
+        <article class="col-md-8 col-lg-9 col-xl-10">
           <section class="card-header d-flex align-items-center">
             <article class="flex-grow-1">
               <h5 class="card-title mb-0">{{ $book->name }}</h5>
@@ -47,7 +47,7 @@
             <article>
               <a
                 class="card-link"
-                href="#"
+                href="{{ route('search', array_merge(request()->query(), ['type' => $book->type->id])) }}"
               >
                 {{ $book->type->name }}
               </a>
@@ -56,7 +56,7 @@
 
               <a
                 class="card-link"
-                href="#"
+                href="{{ route('search', array_merge(request()->query(), ['category' => $book->category->id])) }}"
               >
                 {{ $book->category->name }}
               </a>
@@ -99,7 +99,7 @@
               @foreach($book->tags as $tag)
                 <a
                   class="badge badge-info"
-                  href="#"
+                  href="{{ route('search', array_merge(request()->query(), ['tag' => $tag->id])) }}"
                 >
                   {{ $tag->name }}
                 </a>
