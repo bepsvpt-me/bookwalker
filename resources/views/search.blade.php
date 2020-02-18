@@ -45,21 +45,11 @@
             </article>
 
             <article>
-              <a
-                class="card-link"
-                href="{{ route('search', array_merge(request()->query(), ['type' => $book->type->id])) }}"
-              >
-                {{ $book->type->name }}
-              </a>
+              <span>{{ $book->type->name }}</span>
 
               <span class="mx-1 no-select">/</span>
 
-              <a
-                class="card-link"
-                href="{{ route('search', array_merge(request()->query(), ['category' => $book->category->id])) }}"
-              >
-                {{ $book->category->name }}
-              </a>
+              <span>{{ $book->category->name }}</span>
             </article>
           </section>
 
@@ -83,12 +73,7 @@
 
               <span class="mx-1 no-select">•</span>
 
-              <a
-                class="card-link"
-                href="#"
-              >
-                {{ $book->publisher->name }}
-              </a>
+              <span>{{ $book->publisher->name }}</span>
             </p>
 
             <p class="card-text">
@@ -97,12 +82,7 @@
 
             <article>
               @foreach($book->tags as $tag)
-                <a
-                  class="badge badge-info"
-                  href="{{ route('search', array_merge(request()->query(), ['tag' => $tag->id])) }}"
-                >
-                  {{ $tag->name }}
-                </a>
+                <span class="badge badge-info">{{ $tag->name }}</span>
               @endforeach
             </article>
 
