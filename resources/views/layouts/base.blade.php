@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
   </head>
   <body>
-    <main class="container-fluid pt-4">
+    <main class="container-fluid pt-3">
       @yield('main')
     </main>
 
