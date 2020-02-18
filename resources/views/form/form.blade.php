@@ -31,12 +31,28 @@
   </section>
 
   @if (Route::currentRouteName() === 'search')
-    @include('form.advanced.publishers')
+    @include('form.advanced-search', [
+        'name' => 'types',
+        'label' => 'Type',
+        'pluck' => 'type.name',
+    ])
 
-    @include('form.advanced.types')
+    @include('form.advanced-search', [
+        'name' => 'categories',
+        'label' => 'Category',
+        'pluck' => 'category.name',
+    ])
 
-    @include('form.advanced.categories')
+    @include('form.advanced-search', [
+        'name' => 'publishers',
+        'label' => '出版社',
+        'pluck' => 'publisher.name',
+    ])
 
-    @include('form.advanced.tags')
+    @include('form.advanced-search', [
+        'name' => 'tags',
+        'label' => '標籤',
+        'pluck' => 'tags.*.name',
+    ])
   @endif
 </form>
