@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use App\Models\Category;
-use App\Models\Tag;
-use App\Models\Type;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -32,51 +29,67 @@ final class SearchController extends Controller
 
         $queries = $request->query();
 
-        foreach (['type', 'category', 'tag'] as $filter) {
+        foreach (['publishers', 'types', 'categories', 'tags'] as $filter) {
             if (!empty($queries[$filter])) {
                 $this->{$filter}($builder, $queries[$filter]);
             }
         }
 
-        return view('search', ['books' => $builder->paginate()]);
+        return view('search', [
+            'all' => Book::search($keyword)->get(),
+            'books' => $builder->paginate(),
+        ]);
+    }
+
+    /**
+     * Filter book publisher.
+     *
+     * @param SearchBuilder $builder
+     * @param array<string> $value
+     *
+     * @return void
+     */
+    protected function publishers(SearchBuilder $builder, array $value): void
+    {
+        $builder->whereIn('publisher', $value);
     }
 
     /**
      * Filter book type.
      *
      * @param SearchBuilder $builder
-     * @param string $value
+     * @param array<string> $value
      *
      * @return void
      */
-    protected function type(SearchBuilder $builder, string $value): void
+    protected function types(SearchBuilder $builder, array $value): void
     {
-        $builder->where('type', Type::query()->find($value)->name);
+        $builder->whereIn('type', $value);
     }
 
     /**
      * Filter book category.
      *
      * @param SearchBuilder $builder
-     * @param string $value
+     * @param array<string> $value
      *
      * @return void
      */
-    protected function category(SearchBuilder $builder, string $value): void
+    protected function categories(SearchBuilder $builder, array $value): void
     {
-        $builder->where('category', Category::query()->find($value)->name);
+        $builder->whereIn('category', $value);
     }
 
     /**
      * Filter book tag.
      *
      * @param SearchBuilder $builder
-     * @param string $value
+     * @param array<string> $value
      *
      * @return void
      */
-    protected function tag(SearchBuilder $builder, string $value): void
+    protected function tags(SearchBuilder $builder, array $value): void
     {
-        $builder->whereIn('tags', [Tag::query()->find($value)->name]);
+        $builder->whereIn('tags', $value);
     }
 }
