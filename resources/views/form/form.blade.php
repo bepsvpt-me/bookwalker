@@ -1,4 +1,8 @@
-<form action="{{ route('search') }}" method="GET">
+<form
+  action="{{ route('search') }}"
+  id="search"
+  method="GET"
+>
   <section class="mb-1 form-group">
     <label class="sr-only" for="keyword">Keyword</label>
 
@@ -29,30 +33,4 @@
       </div>
     </div>
   </section>
-
-  @if (Route::currentRouteName() === 'search')
-    @include('form.advanced-search', [
-        'name' => 'types',
-        'label' => 'Type',
-        'pluck' => 'type.name',
-    ])
-
-    @include('form.advanced-search', [
-        'name' => 'categories',
-        'label' => 'Category',
-        'pluck' => 'category.name',
-    ])
-
-    @include('form.advanced-search', [
-        'name' => 'publishers',
-        'label' => '出版社',
-        'pluck' => 'publisher.name',
-    ])
-
-    @include('form.advanced-search', [
-        'name' => 'tags',
-        'label' => '標籤',
-        'pluck' => 'tags.*.name',
-    ])
-  @endif
 </form>

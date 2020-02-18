@@ -5,107 +5,137 @@
 @endif
 
 @section('main')
-  @include('form.form')
+  <div class="row">
+    <div class="col-2">
+      @include('form.advanced-search', [
+          'name' => 'types',
+          'label' => '書籍類型',
+          'pluck' => 'type.name',
+      ])
 
-  <div class="mt-4 alert alert-primary" role="alert">
-    <strong>書籍圖片僅作辨識用途，版權皆屬台灣漫讀股份有限公司所有</strong>
-  </div>
+      @include('form.advanced-search', [
+          'name' => 'categories',
+          'label' => '分類',
+          'pluck' => 'category.name',
+      ])
 
-  <section class="my-4">
-    {{ $books->appends(request()->query())->links() }}
-  </section>
+      @include('form.advanced-search', [
+          'name' => 'publishers',
+          'label' => '出版社',
+          'pluck' => 'publisher.name',
+      ])
 
-  @foreach($books as $book)
-    <section class="card my-4">
-      <div class="row no-gutters">
-        <div class="col-md-4 col-lg-3 col-xl-2 card-cover">
-          <picture>
-            <source srcset="{{ route('safe-browse', ['bid' => $book->bookwalker_id]) }}" type="image/webp">
+      @include('form.advanced-search', [
+          'name' => 'tags',
+          'label' => '標籤',
+          'pluck' => 'tags.*.name',
+      ])
+    </div>
 
-            <img
-              alt="{{ $book->bookwalker_id }}"
-              class="card-img"
-              decoding="async"
-              importance="low"
-              loading="lazy"
-              referrerpolicy="no-referrer"
-              src="{{ route('safe-browse', ['bid' => $book->bookwalker_id]) }}?type=jpg"
-            >
-          </picture>
-        </div>
+    <div class="col-10">
+      @include('form.form')
 
-        <article class="col-md-8 col-lg-9 col-xl-10">
-          <section class="card-header d-flex align-items-center">
-            <article class="flex-grow-1">
-              <h5 class="card-title mb-0">{{ $book->name }}</h5>
+      <div class="mt-4 alert alert-primary" role="alert">
+        <strong>書籍圖片僅作辨識用途，版權皆屬台灣漫讀股份有限公司所有</strong>
+      </div>
 
-              @if($book->slogan)
-                <h6 class="card-subtitle text-muted mt-1">{{ $book->slogan }}</h6>
-              @endif
-            </article>
+      <section class="my-4">
+        {{ $books->appends(request()->query())->links() }}
+      </section>
 
-            <article>
-              <span>{{ $book->type->name }}</span>
+      @foreach($books as $book)
+        <section class="card my-4">
+          <div class="row no-gutters">
+            <div class="col-md-4 col-lg-3 col-xl-2 card-cover">
+              <picture>
+                <source srcset="{{ route('safe-browse', ['bid' => $book->bookwalker_id]) }}" type="image/webp">
 
-              <span class="mx-1 no-select">/</span>
+                <img
+                  alt="{{ $book->bookwalker_id }}"
+                  class="card-img"
+                  decoding="async"
+                  importance="low"
+                  loading="lazy"
+                  referrerpolicy="no-referrer"
+                  src="{{ route('safe-browse', ['bid' => $book->bookwalker_id]) }}?type=jpg"
+                >
+              </picture>
+            </div>
 
-              <span>{{ $book->category->name }}</span>
-            </article>
-          </section>
+            <article class="col-md-8 col-lg-9 col-xl-10">
+              <section class="card-header d-flex align-items-center">
+                <article class="flex-grow-1">
+                  <h5 class="card-title mb-0">{{ $book->name }}</h5>
 
-          <section class="card-body">
-            <p class="card-text">
-              @foreach(['authors', 'writers', 'illustrators', 'translators'] as $group)
-                @foreach($book->{$group} as $creator)
-                  <a
-                    class="card-link"
-                    href="#"
-                  >
-                    {{ $creator->name }}
-                  </a>
+                  @if($book->slogan)
+                    <h6 class="card-subtitle text-muted mt-1">{{ $book->slogan }}</h6>
+                  @endif
+                </article>
+
+                <article>
+                  <span>{{ $book->type->name }}</span>
+
+                  <span class="mx-1 no-select">/</span>
+
+                  <span>{{ $book->category->name }}</span>
+                </article>
+              </section>
+
+              <section class="card-body">
+                <p class="card-text">
+                  @foreach(['authors', 'writers', 'illustrators', 'translators'] as $group)
+                    @foreach($book->{$group} as $creator)
+                      <a
+                        class="card-link"
+                        href="#"
+                      >
+                        {{ $creator->name }}
+                      </a>
+
+                      <span class="mx-1 no-select">•</span>
+                    @endforeach
+                  @endforeach
+
+                  <span>{{ $book->published_at->toDateString() }}</span>
+
 
                   <span class="mx-1 no-select">•</span>
-                @endforeach
-              @endforeach
 
-              <span>{{ $book->published_at->toDateString() }}</span>
+                  <span>{{ $book->publisher->name }}</span>
+                </p>
 
+                <p class="card-text">
+                  {{ \Illuminate\Support\Str::limit($book->description, 220) }}
+                </p>
 
-              <span class="mx-1 no-select">•</span>
+                <article>
+                  @foreach($book->tags as $tag)
+                    <span class="badge badge-info">{{ $tag->name }}</span>
+                  @endforeach
+                </article>
 
-              <span>{{ $book->publisher->name }}</span>
-            </p>
+                <hr>
 
-            <p class="card-text">
-              {{ \Illuminate\Support\Str::limit($book->description, 220) }}
-            </p>
+                <a
+                  class="card-link"
+                  href="{{ $book->link }}"
+                  referrerpolicy="no-referrer"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <small>前往書籍 BookWalker 官方頁面</small>
 
-            <article>
-              @foreach($book->tags as $tag)
-                <span class="badge badge-info">{{ $tag->name }}</span>
-              @endforeach
+                  <svg style="width: 0.956rem; height: 0.956rem" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" />
+                  </svg>
+                </a>
+              </section>
             </article>
+          </div>
+        </section>
+      @endforeach
 
-            <hr>
-
-            <a
-              class="card-link"
-              href="{{ $book->link }}"
-              referrerpolicy="no-referrer"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <small>前往書籍 BookWalker 官方頁面</small>
-
-              <svg style="width: 0.956rem; height: 0.956rem" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" />
-              </svg>
-            </a>
-          </section>
-        </article>
-      </div>
-    </section>
-  @endforeach
-
-  {{ $books->appends(request()->query())->links() }}
+      {{ $books->appends(request()->query())->links() }}
+    </div>
+  </div>
 @endsection
