@@ -12,6 +12,10 @@ nav {
   }
 }
 
+.no-select {
+  user-select: none;
+}
+
 .home {
   min-height: calc(100vh - 8rem);
   display: flex;
@@ -20,8 +24,8 @@ nav {
   justify-content: center;
 }
 
-.no-select {
-  user-select: none;
+.advanced-search {
+  margin-top: 1rem;
 }
 
 @media only screen and (min-width: 768px) {
