@@ -16,7 +16,5 @@
       <a href="https://github.com/bepsvpt-me/bookwalker">GitHub</a>
       <p>bepsvpt.me © {{ date('Y') }}</p>
     </footer>
-
-{{--    <script src="{{ mix('/js/app.js') }}" defer></script>--}}
   </body>
 </html>
