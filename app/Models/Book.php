@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Indexes\BookIndexConfigurator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Rny\ZhConverter\ZhConverter;
 use ScoutElastic\Searchable;
 
 final class Book extends Model
@@ -54,11 +55,6 @@ final class Book extends Model
                 'type' => 'text',
 
                 'fields' => [
-                    'japanese' => [
-                        'analyzer' => 'kuromoji',
-                        'type' => 'text',
-                    ],
-
                     'chinese' => [
                         'analyzer' => 'smartcn',
                         'type' => 'text',
@@ -70,11 +66,6 @@ final class Book extends Model
                 'type' => 'text',
 
                 'fields' => [
-                    'japanese' => [
-                        'analyzer' => 'kuromoji',
-                        'type' => 'text',
-                    ],
-
                     'chinese' => [
                         'analyzer' => 'smartcn',
                         'type' => 'text',
@@ -86,11 +77,6 @@ final class Book extends Model
                 'type' => 'text',
 
                 'fields' => [
-                    'japanese' => [
-                        'analyzer' => 'kuromoji',
-                        'type' => 'text',
-                    ],
-
                     'chinese' => [
                         'analyzer' => 'smartcn',
                         'type' => 'text',
@@ -161,9 +147,9 @@ final class Book extends Model
     {
         return [
             'id' => $this->getKey(),
-            'name' => $this->name,
-            'slogan' => $this->slogan,
-            'description' => $this->description,
+            'name' => $this->toSimpleChinese($this->name),
+            'slogan' => $this->toSimpleChinese($this->slogan),
+            'description' => $this->toSimpleChinese($this->description),
             'price' => $this->price,
             'pages' => $this->pages,
             'publisher' => $this->publisher->name,
@@ -178,6 +164,18 @@ final class Book extends Model
             'tags' => $this->tags->pluck('name')->toArray(),
             'published_at' => $this->published_at->toISOString(),
         ];
+    }
+
+    /**
+     * Convert Traditional Chinese to Simple Chinese.
+     *
+     * @param string|null $text
+     *
+     * @return string|null
+     */
+    protected function toSimpleChinese(?string $text): ?string
+    {
+        return is_null($text) ? null : ZhConverter::zh2hans($text);
     }
 
     /**
