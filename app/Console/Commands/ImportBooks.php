@@ -99,9 +99,9 @@ final class ImportBooks extends Command
             $creators = [
                 'authors' => '作者：',
                 'writers' => '原作：',
-                'illustrators' => '角色設定：',
-                'translators' => '插畫：',
-                'characterDesigners' => '譯者：',
+                'illustrators' => '插畫：',
+                'translators' => '譯者：',
+                'characterDesigners' => '角色設定：',
                 'cartoonists' => '漫畫：',
             ];
 
@@ -155,7 +155,10 @@ final class ImportBooks extends Command
      */
     protected function description(): string
     {
-        $content = $this->content();
+        $content = $this->crawler
+            ->filter('meta[name="description"]')
+            ->first()
+            ->attr('content');
 
         return trim(Str::afterLast($content, ' - '));
     }
@@ -203,13 +206,19 @@ final class ImportBooks extends Command
      */
     protected function tags(): array
     {
-        $content = $this->content();
+        $tags = [];
 
-        $temp = Str::after($content, '，類型標籤：');
+        $node = $this->crawler
+            ->filter('.bookinfo_more ul')
+            ->filterXPath('//span[text()="類型標籤："]');
 
-        $text = trim(Str::before($temp, ' - '));
+        if ($node->count() > 0) {
+            $content = $node->closest('li')->text();
 
-        $tags = empty($text) ? [] : explode(' / ', $text);
+            $text = trim(Str::after($content, '類型標籤：'));
+
+            $tags = explode(' / ', $text);
+        }
 
         $customs = ['已完結', '贈品'];
 
@@ -340,19 +349,6 @@ final class ImportBooks extends Command
     {
         return $this->crawler
             ->filter('meta[name="title"]')
-            ->first()
-            ->attr('content');
-    }
-
-    /**
-     * Get dom description meta.
-     *
-     * @return string
-     */
-    protected function content(): string
-    {
-        return $this->crawler
-            ->filter('meta[name="description"]')
             ->first()
             ->attr('content');
     }
