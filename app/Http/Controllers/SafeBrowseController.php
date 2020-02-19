@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use ErrorException;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -19,13 +20,39 @@ final class SafeBrowseController extends Controller
      */
     public function cover(int $bid): BinaryFileResponse
     {
-        abort_unless(Book::query()->where('bookwalker_id', '=', $bid)->exists(), 404);
+        $this->check($bid);
 
         $url = sprintf('https://images.bookwalker.com.tw/upload/product/%d/zoom_big_%d.jpg', $bid, $bid);
 
-        $path = storage_path(sprintf('images/%s.jpg', md5($url)));
+        $hash = md5($url);
+
+        $prefix = implode('/', array_slice(str_split($hash, '3'), 0, 2));
+
+        $path = storage_path(sprintf('images/%s/%s.jpg', $prefix, $hash));
 
         return $this->response($path, $url);
+    }
+
+    /**
+     * Check book exists.
+     *
+     * @param int $bid
+     *
+     * @return void
+     */
+    protected function check(int $bid): void
+    {
+        $key = sprintf('image-%d', $bid);
+
+        $ttl = 24 * 60 * 60; // 1 day
+
+        $exists = Cache::remember($key, $ttl, function () use ($bid) {
+            return Book::query()
+                ->where('bookwalker_id', '=', $bid)
+                ->exists();
+        });
+
+        abort_unless($exists, 404);
     }
 
     /**
@@ -76,6 +103,10 @@ final class SafeBrowseController extends Controller
         }
 
         abort_unless($content, 404);
+
+        if (!File::isDirectory(dirname($path))) {
+            File::makeDirectory(dirname($path), 0755, true);
+        }
 
         $ok = boolval(File::put($path, $content, true));
 
