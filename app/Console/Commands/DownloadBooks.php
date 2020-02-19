@@ -37,7 +37,7 @@ final class DownloadBooks extends Command
      *
      * @var int
      */
-    protected $notFoundThreshold = 10;
+    protected $notFoundThreshold = 21;
 
     /**
      * DownloadBooks constructor.
