@@ -34,7 +34,12 @@ final class SearchController extends Controller
 
         $queries = $request->query();
 
-        foreach (['publishers', 'types', 'categories', 'tags'] as $filter) {
+        $filters = [
+            'authors', 'writers', 'illustrators', 'translators',
+            'types', 'categories', 'publishers', 'tags',
+        ];
+
+        foreach ($filters as $filter) {
             if (!empty($queries[$filter])) {
                 $this->{$filter}($builder, $queries[$filter]);
             }
@@ -68,19 +73,6 @@ final class SearchController extends Controller
     }
 
     /**
-     * Filter book publisher.
-     *
-     * @param SearchBuilder $builder
-     * @param array<string> $value
-     *
-     * @return void
-     */
-    protected function publishers(SearchBuilder $builder, array $value): void
-    {
-        $builder->whereIn('publisher', $value);
-    }
-
-    /**
      * Filter book type.
      *
      * @param SearchBuilder $builder
@@ -104,6 +96,71 @@ final class SearchController extends Controller
     protected function categories(SearchBuilder $builder, array $value): void
     {
         $builder->whereIn('category', $value);
+    }
+
+    /**
+     * Filter book author.
+     *
+     * @param SearchBuilder $builder
+     * @param array<string> $value
+     *
+     * @return void
+     */
+    protected function authors(SearchBuilder $builder, array $value): void
+    {
+        $builder->whereIn('authors', $value);
+    }
+
+    /**
+     * Filter book writer.
+     *
+     * @param SearchBuilder $builder
+     * @param array<string> $value
+     *
+     * @return void
+     */
+    protected function writers(SearchBuilder $builder, array $value): void
+    {
+        $builder->whereIn('writers', $value);
+    }
+
+    /**
+     * Filter book illustrator.
+     *
+     * @param SearchBuilder $builder
+     * @param array<string> $value
+     *
+     * @return void
+     */
+    protected function illustrators(SearchBuilder $builder, array $value): void
+    {
+        $builder->whereIn('illustrators', $value);
+    }
+
+    /**
+     * Filter book translator.
+     *
+     * @param SearchBuilder $builder
+     * @param array<string> $value
+     *
+     * @return void
+     */
+    protected function translators(SearchBuilder $builder, array $value): void
+    {
+        $builder->whereIn('translators', $value);
+    }
+
+    /**
+     * Filter book publisher.
+     *
+     * @param SearchBuilder $builder
+     * @param array<string> $value
+     *
+     * @return void
+     */
+    protected function publishers(SearchBuilder $builder, array $value): void
+    {
+        $builder->whereIn('publisher', $value);
     }
 
     /**
