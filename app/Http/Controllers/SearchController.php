@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
+use Rny\ZhConverter\ZhConverter;
 use ScoutElastic\Builders\SearchBuilder;
 
 final class SearchController extends Controller
@@ -27,6 +28,8 @@ final class SearchController extends Controller
             return redirect()->route('home');
         }
 
+        $keyword = ZhConverter::zh2hans($keyword);
+
         $builder = Book::search($keyword);
 
         $queries = $request->query();
@@ -39,7 +42,7 @@ final class SearchController extends Controller
 
         return view('search', [
             'all' => $this->all($keyword),
-            'books' => $builder->paginate(),
+            'books' => $builder->paginate()->appends('query', null),
         ]);
     }
 
@@ -58,7 +61,7 @@ final class SearchController extends Controller
 
         return Cache::remember($key, $ttl, function () use ($keyword) {
             return Book::search($keyword)
-                ->take(1000)
+                ->take(300)
                 ->select(['id', 'type_id', 'category_id', 'publisher_id'])
                 ->get();
         });
