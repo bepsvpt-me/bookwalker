@@ -13,7 +13,12 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app['config']->set([
+            'secure-headers.csp.style-src.allow' => [
+                asset('/css/bootstrap.min.css'),
+                asset('/css/app.css'),
+            ],
+        ]);
     }
 
     /**
