@@ -6,12 +6,13 @@
 
     <article
       class="card-body px-2 py-1 overflow-auto"
-      style="max-height: 20rem;"
     >
       @foreach ($items as $item)
         @php ($tempId = uniqid('bookwalker-'))
 
-        <section class="form-check">
+        <section
+          class="form-check form-check-inline filter-checkbox"
+        >
           <input
             class="form-check-input"
             @if (in_array($item, request($name, []), true))
@@ -20,14 +21,14 @@
             form="search"
             id="{{ $tempId }}"
             name="{{ $name }}[]"
-            onchange="this.form.submit()"
             type="checkbox"
             value="{{ $item }}"
           >
 
           <label
-            class="form-check-label"
+            class="form-check-label text-truncate"
             for="{{ $tempId }}"
+            title="{{ $item }}"
           >
             {{ $item }}
           </label>

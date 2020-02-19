@@ -1,3 +1,10 @@
+@import "~dialog-polyfill/dialog-polyfill.css";
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 html, body {
   height: 100%;
 }
@@ -12,6 +19,17 @@ nav {
   }
 }
 
+.btn svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  vertical-align: text-bottom;
+}
+
+a svg {
+  width: 0.956rem;
+  height: 0.956rem;
+}
+
 .no-select {
   user-select: none;
 }
@@ -24,6 +42,38 @@ nav {
   justify-content: center;
 }
 
+#dialog-toggle + dialog {
+  display: none;
+}
+
+#dialog-toggle:checked + dialog {
+  display: block;
+}
+
+.advanced-search {
+  animation: fade-in 0.2s;
+  backdrop-filter: blur(3px);
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+
+  .advanced-search-wrapper {
+    z-index: 15;
+  }
+
+  .advanced-search-container {
+    width: 100%;
+    z-index: 20;
+
+    .filter-checkbox {
+      width: 100%;
+    }
+  }
+}
+
+.book-description {
+  max-height: 6rem;
+}
+
 @media only screen and (min-width: 768px) {
   .card-cover {
     border-right: 1px solid rgba(0, 0, 0, .125);
@@ -31,6 +81,16 @@ nav {
     img {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
+    }
+  }
+
+  .advanced-search {
+    .advanced-search-container {
+      width: 75%;
+
+      .filter-checkbox {
+        width: 18%;
+      }
     }
   }
 }
