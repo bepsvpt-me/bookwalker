@@ -28,7 +28,9 @@ final class SearchController extends Controller
             return redirect()->route('home');
         }
 
-        $keyword = ZhConverter::zh2hans($keyword);
+        $keyword = ZhConverter::zh2hans(
+            str_replace(['!', ':'], ['\!', '\:'], escapeshellcmd($keyword))
+        );
 
         $builder = Book::search($keyword);
 
