@@ -1,11 +1,22 @@
 const mix = require('laravel-mix');
 
-mix.disableNotifications();
+require('laravel-mix-purgecss');
 
-mix.js('resources/js/app.js', 'public/js')
+mix.disableNotifications()
+  .js('resources/js/app.js', 'public/js')
   .sass('resources/sass/app.scss', 'public/css')
   .sourceMaps();
 
 if (mix.inProduction()) {
-  mix.version();
+  const options = {
+    postCss: [
+      require('postcss-discard-comments')({
+        removeAll: true
+      })
+    ],
+  };
+
+  mix.options(options)
+    .purgeCss()
+    .version();
 }
