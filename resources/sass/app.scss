@@ -1,3 +1,4 @@
+@import "~bootstrap/scss/bootstrap";
 @import "~dialog-polyfill/dialog-polyfill.css";
 
 @keyframes fade-in {
@@ -13,10 +14,8 @@ main {
   min-height: calc(100% - 4rem);
 }
 
-nav {
-  ul.pagination {
-    justify-content: center;
-  }
+.pagination {
+  justify-content: center;
 }
 
 .btn svg {
