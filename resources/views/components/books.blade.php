@@ -45,21 +45,31 @@
         </section>
 
         <section class="card-body">
+          @foreach(['authors' => '作者', 'writers' => '原著', 'characterDesigners' => '角色設定', 'illustrators' => '插畫', 'translators' => '譯者'] as $key => $type)
+            @if ($book->{$key}->isNotEmpty())
+              <p class="card-text mb-1">
+                <span>{{ $type }}：</span>
+
+                @foreach($book->{$key} as $creator)
+                  @unless ($loop->first)
+                    <span class="no-select">、</span>
+                  @endunless
+
+                  <a
+                    class="card-link"
+                    href="{{ route(substr($key, 0, -1), [substr($key, 0, -1) => $creator->name]) }}"
+                  >
+                    {{ $creator->name }}
+                  </a>
+                @endforeach
+              </p>
+            @endempty
+          @endforeach
+
           <p class="card-text">
-            @foreach(['authors', 'writers', 'illustrators', 'translators'] as $group)
-              @foreach($book->{$group} as $creator)
-                <span>{{ $creator->name }}</span>
-
-                <span class="mx-1 no-select">•</span>
-              @endforeach
-            @endforeach
-
-            <span>{{ $book->published_at->toDateString() }}</span>
-
-
-            <span class="mx-1 no-select">•</span>
-
             <span>{{ $book->publisher->name }}</span>
+            <span class="mx-1 no-select">發售於</span>
+            <span>{{ $book->published_at->toDateString() }}</span>
           </p>
 
           <p class="card-text overflow-auto book-description">{{ $book->description }}</p>
