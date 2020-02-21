@@ -1,8 +1,6 @@
 @extends('layouts.base')
 
-@if(request('keyword'))
-  @section('title', sprintf('%s | BookWalker 探索號', request('keyword')))
-@endif
+@section('title', sprintf('%s | BookWalker 探索號', request('keyword')))
 
 @section('main')
   <input
