@@ -57,7 +57,7 @@
 
                   <a
                     class="card-link"
-                    href="{{ route(substr($key, 0, -1), [substr($key, 0, -1) => $creator->name]) }}"
+                    href="{{ route(substr($key, 0, -1), ['name' => $creator->name]) }}"
                   >
                     {{ $creator->name }}
                   </a>

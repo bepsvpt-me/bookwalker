@@ -12,13 +12,13 @@ class CreatorController extends Controller
     /**
      * Author books.
      *
-     * @param string $author
+     * @param string $name
      *
      * @return View
      */
-    public function author(string $author): View
+    public function author(string $name): View
     {
-        $books = $this->retrieve('authors', $author);
+        $books = $this->retrieve('authors', $name);
 
         return view('creator', compact('books'));
     }
@@ -26,13 +26,13 @@ class CreatorController extends Controller
     /**
      * Writer books.
      *
-     * @param string $author
+     * @param string $name
      *
      * @return View
      */
-    public function writer(string $author): View
+    public function writer(string $name): View
     {
-        $books = $this->retrieve('writers', $author);
+        $books = $this->retrieve('writers', $name);
 
         return view('creator', compact('books'));
     }
@@ -40,13 +40,13 @@ class CreatorController extends Controller
     /**
      * Writer books.
      *
-     * @param string $designer
+     * @param string $name
      *
      * @return View
      */
-    public function characterDesigner(string $designer): View
+    public function characterDesigner(string $name): View
     {
-        $books = $this->retrieve('characterDesigners', $designer);
+        $books = $this->retrieve('characterDesigners', $name);
 
         return view('creator', compact('books'));
     }
@@ -54,13 +54,13 @@ class CreatorController extends Controller
     /**
      * Illustrator books.
      *
-     * @param string $author
+     * @param string $name
      *
      * @return View
      */
-    public function illustrator(string $author): View
+    public function illustrator(string $name): View
     {
-        $books = $this->retrieve('illustrators', $author);
+        $books = $this->retrieve('illustrators', $name);
 
         return view('creator', compact('books'));
     }
@@ -68,13 +68,13 @@ class CreatorController extends Controller
     /**
      * Translator books.
      *
-     * @param string $author
+     * @param string $name
      *
      * @return View
      */
-    public function translator(string $author): View
+    public function translator(string $name): View
     {
-        $books = $this->retrieve('translators', $author);
+        $books = $this->retrieve('translators', $name);
 
         return view('creator', compact('books'));
     }
