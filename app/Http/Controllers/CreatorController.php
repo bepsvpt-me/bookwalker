@@ -80,6 +80,20 @@ final class CreatorController extends Controller
     }
 
     /**
+     * Cartoonist books.
+     *
+     * @param string $name
+     *
+     * @return View
+     */
+    public function cartoonist(string $name): View
+    {
+        $books = $this->retrieve('cartoonists', $name);
+
+        return view('creator', compact('books'));
+    }
+
+    /**
      * Retrieve creator books.
      *
      * @param string $type

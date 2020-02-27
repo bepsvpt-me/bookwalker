@@ -19,7 +19,7 @@ Route::name('writer')
     ->get('/writers/{name}')
     ->uses('CreatorController@writer');
 
-Route::name('characterDesigner')
+Route::name('character-designer')
     ->get('/character-designers/{name}')
     ->uses('CreatorController@characterDesigner');
 
@@ -30,6 +30,10 @@ Route::name('illustrator')
 Route::name('translator')
     ->get('/translators/{name}')
     ->uses('CreatorController@translator');
+
+Route::name('cartoonist')
+    ->get('/cartoonists/{name}')
+    ->uses('CreatorController@cartoonist');
 
 Route::name('home')
     ->get('/')
