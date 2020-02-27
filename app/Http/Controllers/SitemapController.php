@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Watson\Sitemap\Sitemap;
 
-class SitemapController extends Controller
+final class SitemapController extends Controller
 {
     /**
      * Sitemap instance.
