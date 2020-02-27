@@ -57,7 +57,7 @@
 
                   <a
                     class="card-link"
-                    href="{{ route(\Illuminate\Support\Str::slug(substr($key, 0, -1)), ['name' => $creator->name]) }}"
+                    href="{{ route(\Illuminate\Support\Str::kebab(substr($key, 0, -1)), ['name' => $creator->name]) }}"
                   >
                     {{ $creator->name }}
                   </a>
