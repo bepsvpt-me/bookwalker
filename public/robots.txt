@@ -1,2 +1,4 @@
 User-agent: *
 Disallow:
+
+Sitemap: https://bookwalker.bepsvpt.me/sitemap.xml
