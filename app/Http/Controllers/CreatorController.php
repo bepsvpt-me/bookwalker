@@ -7,7 +7,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
 
-class CreatorController extends Controller
+final class CreatorController extends Controller
 {
     /**
      * Author books.
