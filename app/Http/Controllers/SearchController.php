@@ -28,9 +28,15 @@ final class SearchController extends Controller
             return redirect()->route('home');
         }
 
+        $locale = setlocale(LC_CTYPE, '0');
+
+        setlocale(LC_CTYPE, 'UTF8', 'en_US.UTF-8');
+
         $keyword = ZhConverter::zh2hans(
             str_replace(['!', ':'], ['\!', '\:'], escapeshellcmd($keyword))
         );
+
+        setlocale(LC_CTYPE, $locale);
 
         $builder = Book::search($keyword);
 
