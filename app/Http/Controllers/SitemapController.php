@@ -144,12 +144,12 @@ final class SitemapController extends Controller
 
         foreach ($creators as $creator) {
             if (!empty($creator->name)) {
-                $this->sitemap->addSitemap(
+                $this->sitemap->addTag(
                     route(Str::slug($type), ['name' => $creator->name])
                 );
             }
         }
 
-        return $this->sitemap->index();
+        return $this->sitemap->render();
     }
 }
