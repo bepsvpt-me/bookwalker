@@ -14,21 +14,21 @@
     "ext-json": "*",
     "ext-pdo": "*",
     "babenkoivan/scout-elasticsearch-driver": "~4.0",
-    "bepsvpt/secure-headers": "~5.5",
+    "bepsvpt/secure-headers": "~6.1",
     "fideloper/proxy": "~4.0",
-    "guzzlehttp/guzzle": "~6.5",
-    "htmlmin/htmlmin": "~6.0",
-    "laravel/framework": "~6.2",
+    "guzzlehttp/guzzle": "~7.0",
+    "htmlmin/htmlmin": "~7.0",
+    "laravel/framework": "~7.0",
     "laravel/tinker": "~2.0",
     "rny/zhconverter": "~1.0",
     "symfony/dom-crawler": "~5.0",
-    "watson/sitemap": "~2.1"
+    "watson/sitemap": "~3.0"
   },
   "require-dev": {
-    "facade/ignition": "~1.4",
+    "facade/ignition": "~2.3",
     "fzaninotto/faker": "~1.4",
     "mockery/mockery": "~1.0",
-    "nunomaduro/collision": "~3.0",
+    "nunomaduro/collision": "~4.2",
     "phpunit/phpunit": "~9.0"
   },
   "config": {
